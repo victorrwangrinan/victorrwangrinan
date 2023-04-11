@@ -1,0 +1,140 @@
+﻿/*
+* 将全局样式引入到顶层的application，并不需要每个component都引入
+* 
+* 用法：
+*  <ltng:require styles="{!$Resource.globalStyle}"/>
+*/
+
+
+/*
+* 将placeholder的颜色调暗
+*
+* 由于lightning:select并没有placeholder，所以第一个作为placeholder的option的颜色不会变
+* 建议1：使用lightning:combobox
+* 建议2：如有必要，此处需写个全局样式来覆盖
+*/
+::-webkit-input-placeholder
+{
+	color: rgba(112, 110, 107,0.5);
+}
+::-moz-placeholder
+{
+	color: rgba(112, 110, 107,0.5);
+}
+:-ms-input-placeholder
+{
+	color: rgba(112, 110, 107,0.5);
+}
+::placeholder
+{    
+    color: rgba(112, 110, 107,0.5);
+}
+
+
+/*
+* combobox有错误信息时，红色边框比input要淡/细
+* 修正这个问题
+*/
+
+.slds-has-error [role=combobox] input[readonly] {
+    border-color: rgb(194, 57, 52);
+}
+
+
+/*
+* 改变checkbox的disable样式
+* 主要将对号的icon的颜色调重了
+*/
+.slds-checkbox [type=checkbox][disabled]+.slds-checkbox_faux:after,
+.slds-checkbox [type=checkbox][disabled]+.slds-checkbox--faux:after,
+.slds-checkbox [type=checkbox][disabled]~.slds-checkbox_faux:after,
+.slds-checkbox [type=checkbox][disabled]~.slds-checkbox--faux:after,
+.slds-checkbox [type=checkbox][disabled]+.slds-checkbox__label .slds-checkbox_faux:after,
+.slds-checkbox [type=checkbox][disabled]+.slds-checkbox__label .slds-checkbox--faux:after
+{
+	border-color: rgba(0,0,0,0.5);
+}
+
+
+/*lightning的combox和line-height对不齐问题,IE*/
+lightning-combobox lightning-base-combobox .slds-combobox__form-element 
+{
+	line-height:0;
+}
+
+/*修复嵌套模态框时，fixed找到的父级元素不对*/
+.slds-modal__container
+{
+	transform:none;
+}
+
+/*
+* lightning:formattedUrl组件传null和空字符时完全不显示
+* 为了保留url的样式，但无跳转功能，约定传'null'字符串到value属性
+*/
+lightning-formatted-url>a[href="http://null"]
+{
+	/*fix ie problem,不能是inline*/
+	display:inline-block;
+	-ms-pointer-events:none;
+	pointer-events:none;
+
+}
+
+/*
+* 如果前一个按钮不显示，后一个按钮不加margin-left
+*/
+.slds-button.slds-hide+.slds-button
+{
+	margin-left:0;
+}
+
+/*lightning:tabset的tab focus时不显示下划线*/
+.slds-tabs_default__link[tabindex="0"]:focus
+{
+	text-decoration:none;
+}
+
+/*lightning:input type="datetime"focus时框隐藏掉*/
+lightning-input>lightning-datetimepicker>div:focus
+{
+	outline:none;
+}
+
+/*全局lightning-spinner fixed*/
+.lightning-spinnerr_fixed
+{
+	position:fixed;
+}
+
+/*修正type=search的lightning:input的删除按钮在disable的情况下还可以使用的问题*/
+lightning-input input[type="search"][disabled] ~ div
+{
+	display:none;
+}
+
+/*对于较窄的combobox,提供选项，弹出框的大小自适应；*/
+lightning-combobox.combobox__popup_fit-content .slds-listbox
+{
+	width: auto;
+    max-width: inherit;
+}
+
+lightning-combobox.combobox__popup_fit-content .slds-listbox>lightning-base-combobox-item
+{
+	/*修复ie问题*/	
+	display:block;
+	white-space:nowrap;
+}
+
+/*尝试修复lightning:input type="datetime"在低版本浏览器的问题*/
+lightning-input>lightning-datetimepicker fieldset
+{
+	/*修复fieldset高度不正确的问题，很奇怪*/
+	display:inline-block;
+}
+lightning-input>lightning-datetimepicker fieldset>legend.slds-form-element__legend
+{
+	float:none;
+	white-space:nowrap;
+}

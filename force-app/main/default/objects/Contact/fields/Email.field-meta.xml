@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Email</fullName>
+    <businessOwnerUser>1152435664@qq.com</businessOwnerUser>
+    <businessStatus>Active</businessStatus>
+    <complianceGroup>PII;HIPAA;GDPR;PCI;COPPA;CCPA</complianceGroup>
+    <encryptionScheme>None</encryptionScheme>
+    <securityClassification>MissionCritical</securityClassification>
+    <trackFeedHistory>false</trackFeedHistory>
+</CustomField>

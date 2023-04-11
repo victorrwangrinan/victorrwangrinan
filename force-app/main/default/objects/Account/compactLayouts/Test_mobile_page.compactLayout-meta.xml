@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Test_mobile_page</fullName>
+    <fields>Account_External_Id__c</fields>
+    <fields>Name</fields>
+    <fields>OwnerId</fields>
+    <label>Test mobile page</label>
+</CompactLayout>

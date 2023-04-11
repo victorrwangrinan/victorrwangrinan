@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>love__c</fullName>
+    <externalId>false</externalId>
+    <label>爱好</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>篮球</fullName>
+                <default>false</default>
+                <label>篮球</label>
+            </value>
+            <value>
+                <fullName>羽毛球</fullName>
+                <default>false</default>
+                <label>羽毛球</label>
+            </value>
+            <value>
+                <fullName>乒乓球</fullName>
+                <default>false</default>
+                <label>乒乓球</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>
