@@ -1,0 +1,67 @@
+<apex:page sidebar="false" showHeader="false" controller="testController" id="page">
+	<apex:stylesheet value="{!URLFOR($Resource.SLDS, 'assets/styles/salesforce-lightning-design-system.css')}"/>
+	<apex:stylesheet value="{!$Resource.animate}"/>
+	<apex:form id="myform">
+		<apex:actionFunction action="{!addmessage}" name="addmessage" reRender="myform">
+		</apex:actionFunction>
+		<apex:actionFunction action="{!changeTest}" name="changeTest" >
+		</apex:actionFunction>
+		<apex:inputText value="{!index}" id="index" style="display:none;"/>
+		<input hidden="true" value="{!index2}" id="index2"/>
+		<apex:inputHidden value="{!index3}" id="index3"/>
+		<apex:pageMessages />
+		{!test}
+		<a href="javascript:void(0)" onclick="message()">弹框</a>
+		<a href="javascript:void(0)" onclick="removeActionTest()">change</a>
+		<apex:inputField value="{!ex.Date__c}" required="true"/>
+		<apex:inputField value="{!ex.parent__c}" />
+
+		<div class="demo-only animated fadeIn" style="height: 4rem;display: none;position:absolute;
+	  left:50%;
+	  top:50%;
+	  z-index:2000;" id='alertDiv' >
+		  <div class="slds-notify_container slds-is-relative">
+		    <div class="slds-notify slds-notify_toast slds-theme_success" role="alert">
+		      <span class="slds-assistive-text">success</span>
+		      <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+		        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+		          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#success" />
+		        </svg>
+		      </span>
+		      <div class="slds-notify__content">
+		        <h2 class="slds-text-heading_small ">Account <a href="javascript:void(0);">ACME - 100</a> widgets was created.</h2>
+		      </div>
+		      <button class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close" onclick="closeAlertDiv()">
+		        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+		          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#close" />
+		        </svg>
+		        <span class="slds-assistive-text">Close</span>
+		      </button>
+		    </div>
+		  </div>
+		</div>
+	</apex:form>
+	<script>
+		function removeActionTest(){
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.testController.changeTest}',function(result,event){
+				console.log(event.status);
+				if(event.status){
+					console.log(result);
+				}
+			})
+		}
+		function message(){
+			//document.getElementById('alertDiv').style.display='';
+			document.getElementById('page:myform:index').value='index';
+			document.getElementById('index2').value='index2';
+			document.getElementById('page:myform:index3').value='index3';
+
+			addmessage();
+
+		}
+		function closeAlertDiv(){
+			document.getElementById('alertDiv').style.display='none';
+
+		}
+	</script>
+</apex:page>

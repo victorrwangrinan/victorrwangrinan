@@ -1,0 +1,13 @@
+<!-- 每页记录数选择组件 -->
+<aura:component access="global">
+    <!-- 注册事件：每页显示记录数变化事件，在Footer组件或table组件中消费该事件 -->
+    <aura:registerEvent name="pageCountChange" type="c:ListPageFooter_PageCountChangeEvt"  />
+
+    <lightning:select name="selectItem" aura:id="selectItem" label="Records"
+                      variant="label-hidden" onchange="{!c.pageCountChange}" class="cpri_picklist_without_label">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+    </lightning:select>
+</aura:component>

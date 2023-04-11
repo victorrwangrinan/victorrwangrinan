@@ -1,0 +1,15 @@
+.custom-block{
+    border:none;
+    height:200px;
+    width: 100%
+}
+.content-box{
+	text-align: center;
+    line-height: 170px;
+    font-size: 26px;
+}
+.title-box{
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+}

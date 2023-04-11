@@ -1,0 +1,28 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes">
+	  <ltng:require styles="{!$Resource.globalStyle}"/>
+    <aura:attribute name="memberList" type="List"/>
+    <aura:attribute name="groupId" type="String"/>
+    <aura:attribute name="selectTab" type="String" default="groups"/>
+    <aura:attribute name="isOpenAdd" type="Boolean" default="true"/>
+    <aura:attribute name="isShowMembers" type="Boolean" default="false"/>
+
+    <aura:handler name="change" value="{!v.isOpenAdd}" action="{!c.handleValueChanged}"/>
+
+    <aura:registerEvent name="closeGroupEvt" type="c:CommonEvent"/>
+
+	<c:Modal isShow="{!v.isOpenAdd}" size="medium" title="管理模板">
+	    <div class="slds-box slds-theme_default">
+	        <lightning:tabset selectedTabId="{!v.selectTab}">
+	           	<lightning:tab label="群组管理" id="groups" onactive="{!c.hideMembers}">
+	                <c:CPRI_Program_GroupList selectTab="{!v.selectTab}" memberList="{!v.memberList}" groupId="{!v.groupId}" isShowMembers = "{!v.isShowMembers}"/>
+	            </lightning:tab>
+	            <aura:if isTrue="{!v.isShowMembers}">
+	                <lightning:tab label="群组成员管理" id="members">
+	                <c:GroupMemberList memberList="{!v.memberList}" groupId="{!v.groupId}"/>
+	                </lightning:tab>
+	            </aura:if>
+	        </lightning:tabset>
+
+    	</div>
+    </c:Modal>
+</aura:component>

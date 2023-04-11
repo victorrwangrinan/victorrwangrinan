@@ -1,0 +1,134 @@
+<apex:page showHeader="false" sidebar="false"
+           title="" applyHtmlTag="false" cache="false"
+           applyBodyTag="false"
+           id="page" controller="MyHelloWorld">
+      <apex:includeScript value="{!$Resource.jQuery}"/>
+       <apex:includeLightning />
+      <apex:includeScript value="/lightning/lightning.out.js" />
+
+      <apex:stylesheet value="{!URLFOR($Resource.dist, 'dist/semantic.css')}" />
+      <apex:includeScript value="{!URLFOR($Resource.dist, 'dist/semantic.js')}" />
+      <!-- <apex:includeScript value="{!$Resource.semanticJs}"/>
+      <apex:stylesheet value="{!$Resource.SemanticCss}"/> -->
+      <apex:stylesheet value="{!URLFOR($Resource.bootstrap, 'bootstrapselect/dist/css/bootstrap-select.css')}" />
+      <apex:includeScript value="{!URLFOR($Resource.bootstrap,'bootstrapselect/dist/js/bootstrap-select.js')}" />
+      <script type="text/javascript">
+
+        $(function () {
+            //$('select').selectpicker();
+        });
+
+        function refreshGroupMember(event){
+
+          var msg = event.getParam("message");
+
+          console.log('event: '+msg);
+
+          if(msg=='closeModal'){
+            getMembers();
+          }
+
+        }
+
+        function OpenModal(){
+          $Lightning.use("c:GroupApp", function() {
+            $Lightning.createComponent(
+                "c:GroupManage",
+                {"isOpenAdd":"true"},
+                "theLead",
+                function() {
+                    $A.eventService.addHandler({ "event": "c:CommonEvent", "handler" : refreshGroupMember});
+                });
+            });
+        }
+
+         function dropdownSelect(){
+          $('#multi-select').dropdown();
+          console.log('===');
+        }
+        function closeDropdown(){
+          $('#multi-select').dropdown('hide');
+          console.log('1111');
+        }
+        function getValue(){
+          console.log('==='+document.getElementById('page:myform:selectValue').value);
+        }
+
+      </script>
+    <apex:form id="myform">
+      <apex:actionFunction action="{!getGroupMemberByGroup}" name="getMembers" reRender="myform,mytable" oncomplete="dropdownSelect()"/>
+
+      <div id="theLead"></div>
+
+      <apex:selectList value="{!GroupName}" title="选择模板" size="1" onchange="getMembers()">
+        <apex:selectOptions value="{!groupOptions}"/>
+      </apex:selectList>
+      <input type="button" value="管理模板" onclick="OpenModal()" />
+
+      <table id="mytable">
+        <tr>
+          <td>成员</td>
+          <td>角色</td>
+          <td>姓名/工号</td>
+          <td>决策意见</td>
+        </tr>
+
+        <apex:repeat value="{!groupMembers}" var="member">
+          <tr>
+            <td>{!member.memberType__c}</td>
+            <td>{!member.memberRole__c}</td>
+            <td>{!member.Name}</td>
+            <td>test</td>
+          </tr>
+        </apex:repeat>
+      </table>
+      <!-- <div class="ui search selection dropdown multiple" onclick="dropdownSelect()" id="mulSelectDropDown" >
+        <select class="" multiple="" id="multi-select">
+        <option value="">State</option>
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="AR">Arkansas</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="CT">Connecticut</option>
+        <option value="DE">Delaware</option>
+        <option value="DC">District Of Columbia</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+      </select>
+      <i class="dropdown icon"></i>
+      <a class="ui label transition visible" data-value="AL" style="display: inline-block !important;">Alabama<i class="delete icon"></i></a>
+      <input class="search" autocomplete="off" tabindex="0" style="" id="search"/>
+      <span class="sizer" style=""></span>
+      <div class="default text">State</div>
+      <div class="menu transition hidden" tabindex="-1" id="menuSelect">
+        <div class="item" data-value="AL">Alabama</div>
+        <div class="item" data-value="AK">Alaska</div>
+        <div class="item" data-value="AZ">Arizona</div>
+        <div class="item" data-value="AR">Arkansas</div>
+        <div class="item" data-value="CA">California</div>
+        <div class="item" data-value="CO">Colorado</div>
+        <div class="item" data-value="CT">Connecticut</div>
+        <div class="item" data-value="DE">Delaware</div>
+        <div class="item" data-value="DC">District Of Columbia</div>
+        <div class="item" data-value="FL">Florida</div>
+        <div class="item" data-value="GA">Georgia</div>
+        <div class="item" data-value="HI">Hawaii</div>
+      </div>
+    </div> -->
+    <select class="selectpicker" multiple="true">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
+
+
+    <!-- <apex:selectList value="{!values}" title="test" size="3" multiselect="true"  id="selectValue" >
+        <apex:selectOptions value="{!options}"/>
+    </apex:selectList>
+
+    <apex:commandButton onclick="getValue()" reRender="myform" value="test"/> -->
+    </apex:form>
+</apex:page>

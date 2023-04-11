@@ -1,0 +1,13 @@
+<aura:component controller="Helloworld">
+	<aura:attribute name="account" type="Account"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+
+
+	<lightning:layout horizontalAlign="center" verticalAlign="end">
+		<lightning:layoutItem class="slds-grid_vertical-align-center">
+			<lightning:inputField value="{!v.account.Name}"/>
+		</lightning:layoutItem>
+	</lightning:layout>
+</aura:component>

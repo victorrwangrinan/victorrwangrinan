@@ -1,0 +1,14 @@
+<aura:component>
+	<aura:attribute name="selectedObj" type="sObject" />
+    <aura:registerEvent name="selectedObjectEvent" type="c:selectedObjectEvent"/>
+  	<li role="presentation">
+      	<span class="slds-lookup__item-action slds-media slds-media--center" role="option">
+          	<div class="slds-media__body">
+              	<div class="slds-lookup__result-text" onclick="{!c.selectObject}">
+              		{!v.selectedObj.Name}
+              		<lightning:icon iconName="utility:error" variant="inverse" class="inverse-icon slds-input__icon"/>
+              	</div>
+          	</div>
+     	</span>
+ 	</li>
+</aura:component>

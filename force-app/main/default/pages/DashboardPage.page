@@ -1,0 +1,33 @@
+<apex:page sidebar="false" showHeader="false">
+    <style>
+        .reportTitle{
+            display: none;
+        }
+        .aloha{
+            display: none;
+        }
+        .reportsEclairChart{
+            width: 210px !important;
+        }
+        .analyticsEmbeddedReportChart{
+            width: 230px !important;
+        }
+        .analyticsEmbeddedReportChart .lightning{
+            display: none;
+        }
+    </style>
+    <script>
+
+        function abc() {
+            window.open('/00O7F00000BE1uuUAD');
+        }
+
+    </script>
+    <!-- <apex:iframe src="https://victorwang-dev-ed.my.salesforce.com/00O7F00000BE1uuUAD" scrolling="true" id="theIframe"/> -->
+    <!-- <apex:iframe src="/01Z7F000000WUFNUA4?isdtp=vw" scrolling="true" id="theIframe"/> -->
+    <!-- <dashboard dashboardId="01Z7F000000WUFNUA4" showTitle="true" /> -->
+    <div onclick="abc();" style="cursor:pointer;overflow: hidden;">
+        <analytics:reportChart id="dashboardchart" reportId="00O7F00000BE1uuUAD" size="tiny" showRefreshButton="false"></analytics:reportChart>
+    </div>
+
+</apex:page>

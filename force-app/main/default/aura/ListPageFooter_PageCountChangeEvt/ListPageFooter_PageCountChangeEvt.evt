@@ -1,0 +1,4 @@
+<!-- 每页显示的记录数发生变化时触发 -->
+<aura:event type="COMPONENT" description="When page count changed.">
+    <aura:attribute name="pageCount" type="String"/>
+</aura:event>

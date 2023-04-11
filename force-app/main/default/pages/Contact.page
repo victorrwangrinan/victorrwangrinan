@@ -1,0 +1,11 @@
+<apex:page standardController="Account" tabstyle="account" sidebar="false">
+  <apex:pageBlock >
+      <apex:pageBlockSection >
+        <apex:outputField value="{!Account.name}"/>
+        <apex:outputField value="{!Account.AccountNumber}" />
+      </apex:pageBlockSection>
+      <apex:pageBlockTable value="{!Account.Expense__r}" var="con">
+          <apex:column value="{!con.name}"/>
+      </apex:pageBlockTable>
+  </apex:pageBlock>
+</apex:page>

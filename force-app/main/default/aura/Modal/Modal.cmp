@@ -1,0 +1,85 @@
+<!--
+- edit by robert wu at 2018.12.21
+- 这是公用的模态框组件
+-
+-
+- @param {boolean} isShow 								-是否显示模态框
+-
+- @param {string} size                          		-模态框的大小，可选值noraml(默认),medium,large
+-
+- @param {boolean} showCloseBtn 						-是否显示关闭按钮
+-
+- @param {string} title          						-header的标题
+-
+- @param {string} tagline 								-header的标语，说明文字，显示在标题下面
+-
+- @param {Aura.Component[]} footer 						-自定义footer内容，比如可以放置按钮
+-
+- @param {boolean=false} dynamicUpdateContentOverflow 	-是否动态更新slds-modal__content的overflow，
+-                                                		 如果子元素有弹出框等需要content的overflow为visible的，且为静态的，强烈建议设成true
+-														 因为牵扯到子组件加载问题，可能计算不正确，所以默认值为false
+-
+- @param {function} onClose 					        -点击关闭按钮，触发的回调函数
+-->
+
+<aura:component access="global">
+	<aura:attribute name="isShow" type="Boolean" default="false"/>
+	<aura:attribute name="size" type="String" default="normal"/>
+	<aura:attribute name="showCloseBtn" type="Boolean" default="true"/>
+	<aura:attribute name="title" type="String" default=""/>
+	<aura:attribute name="tagline" type="String" default=""/>
+	<aura:attribute name="footer" type="Aura.Component[]"/>
+	<aura:attribute name="dynamicUpdateContentOverflow" type="Boolean" default="false"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.init}"/>
+	<aura:handler name="render" value="{!this}" action="{!c.handleRender}"/>
+
+
+	<aura:registerEvent name="onClose" type="c:CommonEvent"/>
+
+
+	<aura:if isTrue="{!v.isShow}">
+		<div>
+			<section role="dialog"
+				tabindex="-1"
+				aria-labelledby="modal-heading-01"
+				aria-modal="true"
+				aria-describedby="modal-content-id-1"
+				class="{!'slds-modal slds-fade-in-open slds-modal_'+v.size}">
+
+				<div class="slds-modal__container" aura:id="modal__container">
+					<!--title和tagline都为空时，将header置为空-->
+					<header aura:id="modal__header" class="{!'slds-modal__header '+(and(v.title=='',v.tagline=='')?'slds-modal__header_empty':'')}">
+						<aura:if isTrue="{!v.showCloseBtn}">
+							<lightning:buttonIcon iconName="utility:close" variant="bare-inverse"  size="large" class="slds-modal__close" title="" alternativeText="" onclick="{!c.closeModal}"/>
+						</aura:if>
+
+						<aura:if isTrue="{!v.title!=''}">
+							<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+								{!v.title}
+							</h2>
+						</aura:if>
+						<aura:if isTrue="{!v.tagline!=''}">
+							<p class="slds-m-top_x-small">
+								{!v.tagline}
+							</p>
+						</aura:if>
+					</header>
+
+					<div aura:id="modal__content" class="slds-modal__content slds-p-around_medium"  id="modal-content-id-1">
+						{!v.body}
+					</div>
+
+					<aura:if isTrue="{!v.footer.length!=0}">
+						<footer aura:id="modal__footer" class="slds-modal__footer slds-text-align_center">
+							{!v.footer}
+						</footer>
+					</aura:if>
+				</div>
+			</section>
+			<!--背景-->
+			<div class="slds-backdrop slds-backdrop_open"/>
+		</div>
+	</aura:if>
+
+</aura:component>

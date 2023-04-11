@@ -1,0 +1,25 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" access="global" controller="Helloworld">
+
+	<aura:attribute name="accounts" type="Account[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    
+    <!-- app事件-->
+	<aura:registerEvent name="onChangeEvt" type="c:MyAccountEvt"/>
+    
+    <!-- cmp事件-->
+    <aura:registerEvent name="acountChangeEvt" type="c:AccountCmpEvt"/>
+
+	<lightning:layout horizontalAlign="center" verticalAlign="end">
+		<lightning:layoutItem class="slds-grid_vertical-align-center">
+			<lightning:input type="Text" value="" aura:id="accName"/>
+			<lightning:button label="Reset" onclick="{! c.doInit }"/>
+			<lightning:select name="selAccount" aura:Id="selectAccount" label="please select one account" onchange="{!c.sentOnChangeEvt}">
+				<option value="">choose one</option>
+				<aura:iteration items="{!v.accounts}" var="account">
+					<option value="{!account.Id}" text="{!account.Name}"></option>
+				</aura:iteration>
+			</lightning:select>
+		</lightning:layoutItem>
+	</lightning:layout>
+</aura:component>

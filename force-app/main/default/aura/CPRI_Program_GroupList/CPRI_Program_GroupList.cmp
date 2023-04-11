@@ -1,0 +1,58 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" controller="GroupList">
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="groupList" type="List"/>
+    <aura:attribute name="memberList" type="List"/>
+    <aura:attribute name="groupId" type="String"/>
+    <aura:attribute name="nameFilter" type="String"/>
+    <aura:attribute name="allGroupSize" type="String"/>
+    <aura:attribute name="newGroupName" type="String"/>
+    <aura:attribute name="selectTab" type="String"/>
+    <aura:attribute name="pageSize" type="String" default="10"/>
+    <aura:attribute name="pageNumber" type="String" default="1"/>
+    <aura:attribute name="isBusy" type="Boolean" default="false"/>
+    <aura:attribute name="isOpenAdd" type="Boolean" default="false"/>
+    <aura:attribute name="isOpenMemberList" type="Boolean" default="false"/>
+    <aura:attribute name="isShowMembers" type="Boolean"/>
+    <aura:attribute name="isRequired" type="Boolean" default="true"/>
+
+    <!-- create by victor wang 11/8/2018 用于表单验证 -->
+    <ltng:require scripts="{!$Resource.Validator}"/>
+
+    <aura:handler action="{!c.onInit}" name="init" value="{!this}"/>
+    <aura:handler name="pageChange" event="c:ListPageFooter_PageChangeEvt" action="{!c.pageChange}"/>
+    <aura:handler name="pageCountChange" event="c:ListPageFooter_PageCountChangeEvt" action="{!c.pageCountChange}"/>
+
+    <div class="slds-box slds-theme_default">
+        <div class="halp-step-box-tabset-box">
+            <lightning:layout class="slds-m-bottom--small" verticalAlign="end">
+                <lightning:layoutItem size="3">
+                    <lightning:input label="群组名称" value="{!v.nameFilter}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-p-left_small">
+                    <lightning:button label="查询" variant="brand" onclick="{!c.doSearch}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <hr/>
+
+            <lightning:spinner size="large" variant="brand" class="{! v.isBusy ? 'slds-show' : 'slds-hide' }"/>
+
+            <lightning:layoutItem class="slds-p-left_small">
+                <lightning:button label="新建" variant="brand" onclick="{!c.openAdd}"/>
+            </lightning:layoutItem>
+            <c:Modal isShow="{!v.isOpenAdd}" title="新增群组信息" size="medium">
+                <lightning:layoutItem size="12" padding="around-small">
+                    <lightning:input label="群组名称" value="{!v.newGroupName}" aura:id="groupForm" required="{!v.isRequired}"/>
+                </lightning:layoutItem>
+                <aura:set attribute="footer">
+                <div class="slds-text-align--center">
+                        <lightning:button label="保存" onclick="{!c.saveGroup}"/>
+                        <lightning:button label="取消" onclick="{!c.closeAdd}"/>
+                    </div>
+                </aura:set>
+            </c:Modal>
+
+            <c:DataTable columns="{!v.columns}" data="{!v.groupList}"/>
+            <c:ListPageFooter totalRecords="{!v.allGroupSize}" pageNumber="{!v.pageNumber}" pageCount="{!v.pageSize}"/>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,79 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Victor Wang
+ * @Date: 2021-05-27 16:38:41
+ * @LastEditors: Victor Wang
+ * @LastEditTime: 2021-05-27 17:21:37
+-->
+<template>
+  <div class="slds-grid">
+    <div class="slds-col slds-size_1-of-1 slds-p-bottom_medium">
+      <div class="slds-button-group slds-align_absolute-center" role="group">
+        <button
+          class="slds-button slds-button_neutral"
+          onclick={displayAllCharts}
+        >
+          All
+        </button>
+        <template for:each={filterTypes} for:item="item">
+          <button
+            class="slds-button slds-button_neutral"
+            key={item}
+            data-value={item}
+            onclick={displayFilteredCharts}
+          >
+            {item}
+          </button>
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Samples -->
+  <div class="container" style="text-align: center">
+
+    <!-- Doughnut chart -->
+    <c-sample-app-item>
+      <c-chart slot="chartExample" type="doughnut" responsive="true">
+        <c-dataset labels='["OK", "WARNING", "CRITICAL", "UNKNOWN"]'>
+          <c-data
+            label="# of Tomatoes"
+            detail="[12, 19, 3, 5]"
+            backgroundcolor='[
+              "rgba(14, 110, 206, 1)",
+              "rgba(45, 156, 237, 1)",
+              "rgba(104, 206, 238, 1)",
+              "rgba(150, 242, 238, 1)"
+          ]'
+          ></c-data>
+        </c-dataset>
+        <c-title text="Doughnut Chart"></c-title>
+        <c-legend position="left"></c-legend>
+        <c-arc-configuration
+          bordercolor="rgba(7, 62, 146, 0.7)"
+        ></c-arc-configuration>
+      </c-chart>
+      <code slot="chartCode" lang="html">
+        &lt;c-chart type=&quot;doughnut&quot; responsive=&quot;true&quot;&gt;<br />
+        &emsp;&lt;c-dataset labels=&#39;[&quot;OK&quot;, &quot;WARNING&quot;,
+        &quot;CRITICAL&quot;, &quot;UNKNOWN&quot;]&#39;&gt;<br />
+        &emsp;&emsp;&lt;c-data label=&quot;# of Tomatoes&quot; detail=&quot;[12,
+        19, 3, 5]&quot; backgroundcolor=&#39;[<br />
+        &emsp;&emsp;&emsp;&quot;rgba(14, 110, 206, 1)&quot;,<br />
+        &emsp;&emsp;&emsp;&quot;rgba(45, 156, 237, 1)&quot;,<br />
+        &emsp;&emsp;&emsp;&quot;rgba(104, 206, 238, 1)&quot;,<br />
+        &emsp;&emsp;&emsp;&quot;rgba(150, 242, 238, 1)&quot;<br />
+        &emsp;&emsp;]&#39;&gt;&lt;/c-data&gt;<br />
+        &emsp;&lt;/c-dataset&gt;<br />
+        &emsp;&lt;c-title text=&quot;Doughnut Chart&quot;&gt;&lt;/c-title&gt;<br />
+        &emsp;&lt;c-legend position=&quot;left&quot;&gt;&lt;/c-legend&gt;<br />
+        &emsp;&lt;c-arc-configuration bordercolor=&quot;rgba(7, 62, 146,
+        0.7)&quot;&gt;&lt;/c-arc-configuration&gt;<br />
+        &lt;/c-chart&gt;
+      </code>
+    </c-sample-app-item>
+
+    
+  </div>
+</template>

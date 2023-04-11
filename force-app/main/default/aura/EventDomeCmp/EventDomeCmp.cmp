@@ -1,0 +1,34 @@
+<!--
+ - Created by Spring on 28/11/2017.
+ -->
+
+<aura:component description="EventDomeCmp" implements="flexipage:availableForAllPageTypes">
+
+  <ltng:require scripts="{!$Resource.jquery}" beforeLoadingResources="{!c.loadJqueryBefore}" afterScriptsLoaded="{!c.loadJqueryAfter}"/>
+  <ltng:require scripts="{!$Resource.papaparse}" />
+
+  <aura:attribute name="evtMsg" type="String" default=""/>
+  <aura:attribute name="evtAppMsg" type="String" default=""/>
+  <aura:attribute name="info" type="String" default=""/>
+
+  <!-- name一定要与发出事件的name一致否则会监听不到这个事件 -->
+  <aura:handler event="c:EventDomeCmpEvt" action="{!c.handlerEventDomeCmpEvt}" name="eventDome"/>
+
+  <!-- 注册一个事件-->
+  <aura:registerEvent name="eventAppDome" type="c:EventDomeCmpAppEvt"/>
+
+  <!-- 如果是app事件,则不能写name属性 -->
+  <aura:handler event="c:EventDomeCmpAppEvt" action="{!c.handlerEventDomeAppEvt}"/>
+
+
+  <div>
+    <span>父组件中:接受事件EventDomeCmpEvt的值:<span style="background-color:red">{!v.evtMsg}</span></span><br/>
+    <lightning:button name="给子组件设定属性" label="给子组件设定属性" onclick="{!c.setSubAttr}"/>
+    <lightning:button name="发送App事件" label="发送App事件" onclick="{!c.sendAppEvent}" />
+    <ui:outputText value="{!v.evtAppMsg}"/>
+  </div>
+  <hr/>
+  <h2>子组件1</h2>
+  <c:EventDomeSub1 pText="{!v.info}"/>
+  <hr/>
+</aura:component>

@@ -1,0 +1,16 @@
+<aura:component access="global">
+    <aura:attribute name="showMessage" type="String" access="private"/>
+
+    <aura:attribute name="pageNumber" type="String"/>
+    <aura:attribute name="pageCount"  type="String"/>
+    <aura:attribute name="totalRecords" type="String"/>
+
+    <aura:handler name="change" value="{!v.pageNumber}" action="{!c.changeMessage}"/>
+    <aura:handler name="change" value="{!v.pageCount}" action="{!c.changeMessage}"/>
+    <aura:handler name="change" value="{!v.totalRecords}" action="{!c.changeMessage}"/>
+
+    <!-- 显示当前页码与总页数 -->
+    <div class="slds-text-title_caps">
+        {!v.showMessage}
+    </div>
+</aura:component>

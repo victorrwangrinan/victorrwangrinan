@@ -1,0 +1,130 @@
+/**
+ * eidt by rwu128 on 9/11/2018.
+ */
+ /*列很多时添加水平滚动条,
+ 其实现在table改成固定布局后，宽度一直是100%，不会出现水平滚动条的*/
+.THIS {
+	/*删除以修复ie在只有1行的时候加滚动条*/
+    /*overflow: auto;*/
+    overflow-x: auto;
+    min-height: 40px;
+}
+
+.THIS.table_fixed>table
+{
+    /*table固定布局后，设置th的宽度才会起作用*/
+    table-layout: fixed;
+}
+
+
+.THIS>table.table_border th,
+.THIS>table.table_border td
+{
+    border:solid 1px #000;
+}
+
+.THIS .table__header
+{
+    border-bottom: solid 1px #eeeeee;
+}
+
+
+.THIS tbody tr:nth-child(even)
+{
+    background-color: #f5f5f5;
+}
+
+.THIS tbody tr:hover
+{
+    background-color: #eeeeee;
+}
+
+.THIS th
+{
+    position: relative;
+    white-space: nowrap;
+    max-width: 200px;/*table-layout:auto时，设置max-width是有效果的*/
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.THIS td
+{
+    white-space: nowrap;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.THIS.table_fixed th,
+.THIS.table_fixed td
+{
+    max-width: none;/*fix ie with and max-width同时存在忽略width的问题*/
+}
+
+/*
+* 覆盖单元格里的按钮的样式
+* 使其不要自动折行
+*/
+.THIS>table>tbody td .slds-button
+{
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.THIS .element_invisible
+{
+    display: none;
+}
+
+/*排序相关样式*/
+.THIS .sort-indicator
+{
+    position: absolute;
+    width:100%;
+    height: 100%;
+    padding-right: 0.5rem;
+    left: 0;
+    top: 0;
+    background-color: rgba(255,255,255,0.6);
+    justify-content: flex-end;
+    align-items: center;
+    display: none;
+    cursor: pointer;
+}
+
+.THIS .th_sortable:hover .sort-indicator
+{
+    display: flex;
+}
+
+.THIS .th_sortable lightning-icon
+{
+    display: none;
+}
+
+.THIS .th_sortable lightning-icon svg/*没有属性可以直接修改icon的颜色*/
+{
+    fill:rgb(0, 112, 210);
+}
+
+.THIS .th_sortable[data-column-sort-method=""]:hover .sort-indicator__asc,
+.THIS .th_sortable[data-column-sort-method="des"]:hover .sort-indicator__asc
+{
+    display: block;
+}
+
+.THIS .th_sortable[data-column-sort-method="asc"]:hover .sort-indicator__des
+{
+    display: block;
+}
+
+/*弹出框内的lightning:checkboxGroup*/
+.THIS>.cCPRI_Modal lightning-checkbox-group .slds-form-element__control>span.slds-checkbox
+{
+    /*为了兼容ie11，不使用grid两列布局*/
+    display: inline-block;
+    width: 50%;
+}

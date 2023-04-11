@@ -1,0 +1,21 @@
+<!--
+ * @Description:
+ * @Author: Victor
+ * @Date: 2019-09-25 17:13:26
+ * @LastEditors: Victor
+ * @LastEditTime: 2019-09-25 19:54:10 this is victor test
+ -->
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global">
+	 <aura:attribute name="obj" type="Object"/>
+	 THis is Aura component
+	<!-- <c-child-cmp test-name="test name"></c-child-cmp> -->
+	<c:appCmp publicProperty="Test Name"></c:appCmp>
+	{!v.obj.Owner.name}
+
+	<lightning:button label="Neutral" title="Neutral action" onclick="{! c.handleClick }"/>
+    <lightning:fileUpload label="Attach receipt"
+        name="fileUploader"
+        multiple="true"
+        recordId="0017F00002ofRh2QAE"
+        onuploadfinished="{!c.handleUploadFinished}" />
+</aura:component>

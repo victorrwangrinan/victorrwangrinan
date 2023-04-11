@@ -1,0 +1,19 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Victor Wang
+ * @Date: 2021-04-20 11:03:15
+ * @LastEditors: Victor Wang
+ * @LastEditTime: 2021-08-25 14:43:16
+-->
+<aura:component controller="Helloworld">
+	<aura:attribute name="account" type="Account"/>
+    
+    <aura:handler event="c:AccountCmpEvt" name="acountChangeEvt" action="{!c.handleOnChange}" />
+    
+    <c:helloword/>
+    <lightning:card title="Find an Account" class="slds-m-top_10px" iconName="standard:custom">
+        <c:MyAccountComponent/>
+    </lightning:card>
+    <c:ShowAccount aura:id="childCmp"/>
+</aura:component>

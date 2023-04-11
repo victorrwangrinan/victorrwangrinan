@@ -1,0 +1,51 @@
+<apex:page >
+	<head>
+		<meta charset='utf-8' />
+		<apex:stylesheet value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/core/main.css')}"/>
+		<apex:stylesheet value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/daygrid/main.css')}"/>
+		<apex:stylesheet value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/timegrid/main.css')}"/>
+		<apex:stylesheet value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/list/main.css')}"/>
+		<apex:stylesheet value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/bootstrap/main.css')}"/>
+
+		<apex:includeScript value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/core/main.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/list/main.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/timegrid/main.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/daygrid/main.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/interaction/main.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/google-calendar/main.js')}"/>
+		<apex:includeScript value="{!URLFOR($Resource.fullcalendar,'fullcalendar-4.2.0/packages/bootstrap/main.js')}"/>
+		<script>
+			//window.onload = function(){
+				document.addEventListener('DOMContentLoaded', function() {
+		        var calendarEl = document.getElementById('calendar');
+
+		        var calendar = new FullCalendar.Calendar(calendarEl, {
+		          plugins: [ 'dayGrid','timeGrid','list','bootstrap','googleCalendarPlugin' ],
+		          header: {
+				    center: 'dayGridMonth,timeGridFourDay' // buttons for switching between views
+				  },
+				  views: {
+				    timeGridFourDay: {
+				      type: 'timeGrid',
+				      duration: { days: 4 },
+				      buttonText: '4 day'
+				    }
+				  },
+				  timeZone: 'UTC',
+				  events: [
+				    {
+				      id: 'a',
+				      title: 'my event',
+				      start: '2019-07-12',
+				      end: '2019-07-16'
+				    }
+				  ]
+		        });
+
+		        calendar.render();
+		      });
+			//}
+	    </script>
+    </head>
+    <div id='calendar'></div>
+</apex:page>

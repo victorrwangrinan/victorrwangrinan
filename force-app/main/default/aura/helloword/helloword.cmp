@@ -1,0 +1,15 @@
+<aura:component controller="Helloworld">
+    
+    <aura:attribute name="content" default="hello,world" type="string"/>
+    <aura:attribute name="flag" default="false" type="boolean"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:if isTrue="{!v.flag}">
+        ttttt
+    </aura:if>
+    <lightning:button iconName="utility:add" 
+                            variant="brand"
+                            class="buttons"
+                            title="add" 
+                            onclick="{!c.addHandler}"/>
+</aura:component>

@@ -1,0 +1,7 @@
+.THIS .slds-select{
+    height: calc(1.7rem + (1px * 2));
+}
+
+.THIS .slds-form-element__label{
+    display:none;
+}

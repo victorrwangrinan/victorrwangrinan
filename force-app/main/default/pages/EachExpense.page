@@ -1,0 +1,5 @@
+<apex:page sidebar="false" showHeader="false" controller="EachExpense" id="page">
+	<apex:form id="form">
+
+	</apex:form>
+</apex:page>

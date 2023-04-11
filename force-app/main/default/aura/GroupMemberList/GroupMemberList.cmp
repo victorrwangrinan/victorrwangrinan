@@ -1,0 +1,113 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" controller="GroupMemberListCtl">
+    <aura:attribute name="groupId" type="String"/>
+    <aura:attribute name="createType" type="String"/>
+    <aura:attribute name="createRole" type="String"/>
+    <aura:attribute name="createName" type="String"/>
+    <aura:attribute name="searchNo" type="String"/>
+    <aura:attribute name="searchName" type="String"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="memberList" type="List"/>
+    <aura:attribute name="optionMembers" type="List"/>
+    <aura:attribute name="memberColumns" type="List"/>
+    <aura:attribute name="isBusy" type="Boolean" default="false"/>
+    <aura:attribute name="isOpenAdd" type="Boolean" default="false"/>
+    <aura:attribute name="isRequired" type="Boolean" default="true"/>
+    <aura:attribute name="isOpenCreate" type="Boolean" default="false"/>
+    <aura:attribute name="allMemberSize" type="String"/>
+    <aura:attribute name="pageSize" type="String" default="10"/>
+    <aura:attribute name="pageNumber" type="String" default="1"/>
+
+    <aura:attribute name="memberTypeOptions" type="List" default="[]"/>
+    <aura:attribute name="memberRoleOptions" type="List" default="[]"/>
+
+    <!-- create by victor wang 11/1/2018 用于表单验证 -->
+    <ltng:require scripts="{!$Resource.Validator}"/>
+
+    <aura:handler action="{!c.onInit}" name="init" value="{!this}"/>
+    <aura:handler name="change" value="{!v.groupId}" action="{!c.groupIdChange}"/>
+    <aura:handler name="pageChange" event="c:ListPageFooter_PageChangeEvt" action="{!c.pageChange}"/>
+    <aura:handler name="pageCountChange" event="c:ListPageFooter_PageCountChangeEvt" action="{!c.pageCountChange}"/>
+
+    <div class="slds-box slds-theme_default">
+        <div class="halp-step-box-tabset-box">
+            <aura:if isTrue="{!v.groupId != null}">
+                <lightning:layout class="CA_button_box">
+                    <lightning:layoutItem >
+                        <lightning:button variant="brand" label="新建" onclick="{!c.openCreate}"/>
+                        <lightning:button variant="brand" label="删除" onclick="{!c.onDelete}"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </aura:if>
+            <c:DataTable columns="{!v.columns}" data="{!v.memberList}"/>
+            <c:ListPageFooter totalRecords="{!v.allMemberSize}" pageNumber="{!v.pageNumber}" pageCount="{!v.pageSize}"/>
+
+            <!-- 请选择团队成员 -->
+            <c:Modal isShow="{!v.isOpenAdd}" size="medium" title="选择成员">
+                <lightning:layout multipleRows="true" horizontalAlign="space">
+
+                    <lightning:layoutItem size="5">
+                      <lightning:input label="名称" value="{!v.searchName}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="5">
+                      <lightning:input label="工号" value="{!v.searchNo}"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <br/>
+
+                <lightning:layout horizontalAlign="center" class="CA_button_box">
+                    <lightning:layoutItem >
+                        <lightning:button variant="brand" label="查询" onclick="{!c.searchOpMembers}"/>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <lightning:button variant="brand" label="重置" onclick="{!c.doReset}"/>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <lightning:button variant="brand" label="创建" onclick="{!c.openCreate}"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <hr/>
+
+                <c:DataTable columns="{!v.memberColumns}" data="{!v.optionMembers}"/>
+                <aura:set attribute="footer">
+                    <div class="slds-text-align--center">
+                        <lightning:button label="确认" onclick="{!c.confirmAdd}"/>
+                        <lightning:button label="取消" onclick="{!c.closeAdd}"/>
+                    </div>
+                </aura:set>
+            </c:Modal>
+
+            <!-- 新建成员信息 -->
+            <c:Modal isShow="{!v.isOpenCreate}" size="small" title="成员信息">
+                <lightning:layout multipleRows="true" horizontalAlign="space">
+                    <lightning:layoutItem size="8">
+                      <lightning:combobox name="{!v.FieldName}"
+                        placeholder="请选择"
+                        value="{!v.createType}"
+                        options="{!v.memberTypeOptions}"
+                        label="成员"
+                        onchange="{!c.getDependentPicklist}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="8">
+                      <lightning:combobox name="{!v.FieldName}"
+                        placeholder="请选择"
+                        value="{!v.createRole}"
+                        options="{!v.memberRoleOptions}"
+                        label="角色"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="8">
+                      <lightning:input label="名称"
+                                      value="{!v.createName}"
+                                      required="{!v.isRequired}"
+                                      maxlength="50"
+                                      aura:id="memberForm"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+
+                <aura:set attribute="footer">
+                    <div class="slds-text-align--center">
+                        <lightning:button label="确认" onclick="{!c.confirmCreate}"/>
+                        <lightning:button label="取消" onclick="{!c.closeCreate}"/>
+                    </div>
+                </aura:set>
+            </c:Modal>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,18 @@
+<template>
+    <lightning-button label="link" onclick={openLink}></lightning-button>
+    <lightning-card title="path demo">
+        <lightning-layout>
+            <lightning-layout-item size="12" class="slds-float--right">
+                <lightning-button onclick={handlePreviousStepAction} variant="brand" label="Previous" disabled={disablePrevious} class="slds-m-right_x-small slds-no-flex text-right ">
+                </lightning-button>
+                <lightning-button onclick={handleNextStepAction} variant="brand" label="Next" disabled={disableEnd} class="slds-m-right_x-small slds-no-flex text-right ">
+                </lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-progress-indicator current-step={currentStep} type="path" >
+            <template for:each={stepsForProgress} for:item="step">
+                <lightning-progress-step label={step.label} value={step.value} key={step.label}></lightning-progress-step>
+            </template>
+        </lightning-progress-indicator>
+    </lightning-card>
+</template>

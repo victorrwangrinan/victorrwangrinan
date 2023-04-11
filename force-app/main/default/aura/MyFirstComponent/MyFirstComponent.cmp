@@ -1,0 +1,30 @@
+<!--
+ * @Description:
+ * @Author: Do not edit
+ * @Date: 2019-08-13 13:49:26
+ * @LastEditors: Victor
+ * @LastEditTime: 2019-08-14 17:07:11
+ -->
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" access="global" controller="Helloworld">
+
+	<aura:attribute name="accounts" type="Account[]"/>
+	<aura:attribute name="accName" type="string"/>
+	<aura:handler action="{!doInit}" value="{!this}" name="init"/>
+
+
+
+	<lightning:layout horizontalAlign="center" verticalAlign="end">
+		<lightning:layoutItem class="slds-grid_vertical-align-center">
+			<lightning:input type="Text" value="{!v.accName}"/>
+			I solemnly swear I know JavaScript
+			I am proficient in JavaScript
+			<lightning:buttonIcon variant="bare" onclick="{! c.doInit }" />
+			<lightning:select name="selAccount" label="please select one account">
+				<option value="">choose one</option>
+				<aura:iteration items="{!v.accounts}" var="account">
+					<option value="account.Id" text="{!account.Name}"></option>
+				</aura:iteration>
+			</lightning:select>
+		</lightning:layoutItem>
+	</lightning:layout>
+</aura:component>

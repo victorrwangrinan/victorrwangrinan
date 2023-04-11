@@ -1,0 +1,19 @@
+<template>
+	<!-- <div style="background-color: white">
+		<lightning-layout>
+	    	<lightning-layout-item size="2" padding="around-small">
+		        <p class="title-box">VF page below in an iFrame</p>
+		        <iframe class="custom-block"  src="/apex/DashboardPage" ></iframe>
+		    </lightning-layout-item>
+		    <lightning-layout-item size="2" padding="around-small">
+		        <p class="title-box">VF page below in an iFrame</p>
+		        <div class="custom-block content-box">
+		        	20
+		        </div>
+		    </lightning-layout-item>
+		</lightning-layout>
+	</div> -->
+	<lightning-button label="download" onclick={download}></lightning-button>
+	<lightning-map map-markers={mapMarkers}> </lightning-map>
+	<iframe id="vfFrame" src="https://victorwang-dev-ed--c.ap5.visual.force.com/apex/TestIframe" ></iframe>
+</template>

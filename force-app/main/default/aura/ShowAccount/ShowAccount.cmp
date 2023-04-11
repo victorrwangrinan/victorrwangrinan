@@ -1,0 +1,34 @@
+<aura:component controller="Helloworld">
+	<aura:attribute name="account" type="Object"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:method name="search" action="{!c.doSearch}" access="PUBLIC">
+        <aura:attribute name="boatTypeId" type="String"/>
+    </aura:method>
+    
+    <force:recordData aura:id="recordEditor"
+                      layoutType="FULL"
+                      fields="['Name']"
+                      recordId="{!v.accountId}"
+                      targetError="{!v.recordError}"
+                      targetRecord="{!v.account}"
+                      targetFields="{!v.simpleRecord}"
+                      mode="EDIT"/>
+
+	<!--<aura:handler event="c:MyAccountEvt" action="{!c.handleOnChange}" />-->
+	<!--<aura:handler event="c:AccountCmpEvt" name="acountChangeEvt" action="{!c.handleOnChange}" />-->
+	<div class="Record Details">
+        <lightning:button label="保存" onclick="{!c.doSave}"/>
+        <lightning:card iconName="standard:account" title="{!v.simpleRecord.Name}">
+        <div class="slds-p-horizontal--small">
+        	<p class="slds-text-heading--small">
+            	<lightning:input type="text" title="客户名称" value="{!v.simpleRecord.Name}"/>
+            </p>    
+        </div>
+        </lightning:card>
+    </div>
+</aura:component>

@@ -1,0 +1,216 @@
+<apex:page showHeader="false" sidebar="false" controller="ad">
+    <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style>
+            body {
+                font-family: Arial;
+                font-size: 10pt;
+                line-height: 110%;
+            }
+
+            p.MsoHeader,
+            li.MsoHeader,
+            div.MsoHeader {
+                margin: 0;
+                margin-top: .0001pt;
+                mso-pagination: widow-orphan;
+                tab-stops: center 3.0in right 6.0in
+            }
+
+            p.MsoFooter,
+            li.MsoFooter,
+            div.MsoFooter {
+                margin: 0;
+                margin-bottom: .0001pt;
+                mso-pagination: widow-orphan;
+                tab-stops: center 3.0in right 6.0in
+            }
+
+            @page Main {
+                size: 612.0pt 792.0pt;
+                margin: .5in .5in .5in .5in;
+                mso-header-margin: 0cm;
+                mso-header: h1;
+                mso-footer: f1;
+                mso-first-header: fh1;
+                mso-first-footer: ff1;
+                mso-footer-margin: .5in;
+                mso-paper-source: 0;
+                mso-title-page: yes;
+                mso-page-number: 0;
+            }
+
+            div.Main {
+                page: Main
+            }
+
+            .triangle:before {
+                content: "";
+                width: 10px;
+                height: 10px;
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                border-left: 2px solid #ff4891;
+                border-top: 2px solid #ff4891;
+                border-bottom: 2px solid #ff4891;
+                border-right: 2px solid #ff4891;
+                transform: rotate(45deg)
+            }
+
+            .first {
+
+                position: relative;
+                overflow: hidden;
+                /*display:flex;
+			justify-content: center;
+			align-content: center;
+			align-items: center;
+			overflow:hidden;*/
+            }
+
+            .sec {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+            }
+
+            .third {
+                position: absolute;
+                top: 50%;
+                z-index: -10;
+                width: 282px;
+                height: 282px;
+                background: green;
+                margin-top: -1px;
+                transform-origin: top center;
+                transform: rotate(30deg);
+
+            }
+
+            .fouth {
+                width: 100%;
+                height: 100px;
+                position: absolute;
+                top: 46.7%;
+                background: black;
+                z-index: -5;
+            }
+        </style>
+        <!-- <script>
+            window.onload = function () {
+                var trans = document.getElementById("trans");
+                var angle = 0;
+                setInterval(function () {
+                    angle += 1;
+                    rt = angle + "deg";
+                    trans.style.transform = "rotate(" + rt + ")";
+                }, 60)
+            }
+
+        </script> -->
+    </head>
+
+    <body>
+        <div class="Main">
+            <!-- <div style="mso-element:header;" id="fh1" >
+                        <div class="MsoHeader">
+                            <img src="{!imgHeader1}" width="146.5" height="89.5"/>
+                        </div>
+                    </div>
+                    <div style="mso-element:header;" id="h1">
+                        <div class="MsoHeader">
+                            <div style="position:absolute;top:10pt;height:90pt;">
+                                <img src="{!imgHeader2}" width="146.5" height="89.5"/>
+                            </div>
+                        </div>
+                    </div> -->
+            <table style='margin-left:50in;'>
+                <tr style='height:1pt;mso-height-rule:exactly'>
+                    <td>
+                        <div style='mso-element:header' id="fh1">
+                            <p class="MsoHeader">
+                                    <table border="0" cellspacing="0" cellpadding="0" style="width:100%;background-color:white;margin-left:10pt">
+                                        <tr>
+                                            <td width="40%"></td>
+                                            <td align="right" style="padding: 5pt;background-color:white;">
+                                                <img src="{!imgHeader1}" width="146.5" height="89.5" />
+                                            </td>
+                                            <td align="right" style="padding: 5pt;padding-right:0;background-color:white;">
+                                                <img src="{!imgHeader2}" width="146.5" height="89.5" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </p>
+                        </div>
+                        &nbsp;
+                    </td>
+                    <td>
+                        <div style='mso-element:header' id="h1">
+                            <p class="MsoHeader">
+                                <table border="0" cellspacing="0" cellpadding="0" style="background-color:white;">
+                                    <tr>
+                                        <td width="60%"></td>
+                                        <td align="right" style="padding: 5pt;background-color:white;">
+                                            <img src="{!imgHeader2}" width="146.5" height="89.5" vspace="10" hspace="10" />
+                                        </td>
+                                        <td align="right" style="padding: 5pt;padding-right:0;background-color:white;">
+                                            <img src="{!imgHeader2}" width="146.5" height="89.5" vspace="10" hspace="10" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                        </div>
+                        &nbsp;
+                    </td>
+
+                    <td>
+                        <div style='mso-element:footer' id="f1">
+                            <p class="MsoFooter">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="mso-padding-alt:1.4pt 2.25pt 1.4pt 2.25pt">
+                                    <tr>
+                                        <td width="30%">| Quote</td>
+                                        <td align="center" width="40%"></td>
+                                        <td align="right" width="30%">
+                                            <span style="font-size: 0.5rem;">
+                                                <span style='mso-field-code: PAGE'></span> /
+                                                <span style='mso-field-code: NUMPAGES'></span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                        </div>
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <!-- <div style="position:relative;width:500px;overflow:hidden;">
+                    <div class="first" style="width:280px;height:280px;border-radius:50%; border:1px solid black">
+                        <div class="sec" style="width:250px;height:250px;border-radius:50%; border:1px solid black">
+
+                        </div>
+                        <div class="third" id="trans" style=""></div>
+                        <div class="fouth" style=""></div>
+                    </div>
+                    <div style="width:282px;height:281px;background:white;position:absolute;top:133px"></div>
+                </div> -->
+                I'm page 1.
+            </div>
+            <br clear="all" style="mso-special-character:line-break;page-break-before:always" />
+            <div>
+                I'm page 2.
+                <div style="display:none">123123</div>
+            </div>
+        </div>
+    </body>
+
+    </html>
+
+</apex:page>

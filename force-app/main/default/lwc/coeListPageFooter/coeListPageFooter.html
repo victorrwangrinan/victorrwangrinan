@@ -1,0 +1,104 @@
+<!--
+ * @Description:
+ * @Author: Do not edit
+ * @Date: 2019-08-20 10:15:55
+ * @LastEditors: Victor
+ * @LastEditTime: 2019-08-20 16:52:23
+ -->
+<!-- This is for page -->
+<template>
+    <div class="slds-global-header slds-grid slds-grid_align-spread">
+        <!-- show page number -->
+        <div class="slds-global-header__item slds-button-group" role="group">
+			<!-- first -->
+			<lightning-button
+				label="First"
+				onclick={openFirst}
+				disabled={previousBtn}
+				variant="Neutral"
+				class="slds-m-horizontal_xxx-small"
+			></lightning-button>
+            <!-- next -->
+            <lightning-button-icon
+                icon-name="utility:chevronleft"
+				variant="border"
+				disabled={previousBtn}
+                icon-class="dark"
+                onclick={openPreviousPage}
+            ></lightning-button-icon>
+            <!-- front show more -->
+            <template if:true={isShowFrontMore}>
+				<lightning-button
+                    label="1"
+                    onclick={openThePage}
+                    class="slds-m-horizontal_xxx-small"
+                ></lightning-button>
+                <lightning-button-icon
+                    icon-name="utility:threedots"
+                    variant="bare"
+                    icon-class="dark"
+                    disabled
+                    class="slds-m-horizontal_xxx-small"
+                ></lightning-button-icon>
+            </template>
+            <!-- page number -->
+            <template for:each={pageCounter} for:item="page">
+                <lightning-button
+                    label={page.num}
+                    onclick={openThePage}
+					key={page.num}
+					variant={page.btn}
+                    class="slds-m-horizontal_xxx-small"
+                ></lightning-button>
+            </template>
+            <!-- behind show more -->
+            <template if:true={isShowbehindMore}>
+                <lightning-button-icon
+                    icon-name="utility:threedots"
+                    variant="bare"
+                    icon-class="dark"
+                    disabled
+				></lightning-button-icon>
+				<lightning-button
+                    label={pageCount}
+                    onclick={openThePage}
+                    class="slds-m-horizontal_xxx-small"
+                ></lightning-button>
+            </template>
+            <!-- previous -->
+            <lightning-button-icon
+                icon-name="utility:chevronright"
+                variant="border"
+				icon-class="dark"
+				disabled={nextBtn}
+                onclick={openNextPage}
+			></lightning-button-icon>
+			<!-- first -->
+			<lightning-button
+				label="Last"
+				onclick={openLast}
+				variant="Neutral"
+				disabled={nextBtn}
+				class="slds-m-horizontal_xxx-small"
+			></lightning-button>
+        </div>
+
+        <div class="slds-list_horizontal">
+            <!-- 显示当前页码与总页数 -->
+            <div class="slds-align_absolute-center">
+                <div class="slds-text-title_caps">
+                    {start}-{end} RECORDS | TOTAL {dataSize} RECORDS
+                </div>
+            </div>
+
+            <!-- 显示每页显示的行数 -->
+            <div class="slds-global-header__item">
+				<select class="select-page-size" onchange={changePageSize}>
+					<option value="10" selected>10</option>
+					<option value="20">20</option>
+					<option value="50">50</option>
+				</select>
+            </div>
+        </div>
+    </div>
+</template>

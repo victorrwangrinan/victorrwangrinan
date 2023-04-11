@@ -1,0 +1,33 @@
+<aura:component access="global">
+    <aura:attribute name="pageCounter" type="String[]" access="private"/>
+    <aura:attribute name="totalPages" type="String" access="private"/>
+
+    <aura:attribute name="pageNumber" type="String" default="1"/>
+    <aura:attribute name="pageCount"  type="String" default="10"/>
+    <aura:attribute name="totalRecords" type="String" default="0"/>
+
+    <aura:handler name="change" value="{!v.totalRecords}" action="{!c.totalRecordsChange}"/>
+    <aura:handler name="pageChange" event="c:ListPageFooter_PageChangeEvt" action="{!c.pageChange}" />
+    <aura:handler name="pageCountChange" event="c:ListPageFooter_PageCountChangeEvt" action="{!c.pageCountChange}" />
+
+    <div class="slds-global-header slds-grid slds-grid_align-spread">
+        <!-- 显示页码按妞 -->
+        <div class="slds-global-header__item slds-button-group" role="group">
+            <aura:iteration items="{!v.pageCounter}" var="pgn">
+                <c:ListPageFooter_PageNumber pageNumber="{!pgn}" currentPageNumber="{!v.pageNumber}" totalPages="{!v.totalPages}"/>
+            </aura:iteration>
+        </div>
+
+        <div class="slds-list_horizontal">
+            <!-- 显示当前页码与总页数 -->
+            <div class="slds-align_absolute-center">
+                <c:ListPageFooter_PageRecord pageNumber="{!v.pageNumber}" pageCount="{!v.pageCount}" totalRecords="{!v.totalRecords}"/>
+            </div>
+
+            <!-- 显示每页显示的行数 -->
+            <div class="slds-global-header__item">
+                <c:ListPageFooter_PageCount />
+            </div>
+        </div>
+    </div>
+</aura:component>

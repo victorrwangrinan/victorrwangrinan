@@ -1,0 +1,18 @@
+<!--
+ * @Description:This is a test Page
+ * @Author: Victor
+ * @Date: 2019-08-28 13:16:08
+ * @LastEditors: Victor Wang
+ * @LastEditTime: 2021-08-25 14:47:52
+ -->
+<template>
+	<template for:each={accList} for:item="acc">
+		<c-child-cmp key={acc.key} acc={acc} ondatachange={handleSetData}></c-child-cmp>
+	</template>
+	
+	<!-- <lightning-button label="getValue" onclick={handleValue}></lightning-button>
+	{inputValue}
+	<lightning-input value={inputValue} onchange={handleOnChange}></lightning-input>-->
+	<lightning-button label="Add" onclick={handleAdd}></lightning-button>
+	<lightning-button label="Complete" onclick={handleComplete}></lightning-button>
+</template>

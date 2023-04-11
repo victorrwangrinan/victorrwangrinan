@@ -1,0 +1,22 @@
+<!--
+ * @Descripttion:
+ * @version:
+ * @Author: Victor Wang
+ * @Date: 2021-07-14 18:00:30
+ * @LastEditors: Victor Wang
+ * @LastEditTime: 2021-07-14 18:04:48
+-->
+<template>
+	<lightning-quick-action-panel header="My action">
+
+        Here's some content for the modal body.
+        <p>These two fields are auto-populated based on the record context:</p>
+    <p>RecordId: <i>{recordId}</i>, objectApiName: <i>{objectApiName}</i></p>
+    <p>{pageRefString}</p>
+
+        <div slot="footer">
+          	<lightning-button variant="neutral" label="Cancel" onclick={handCancle}></lightning-button>
+          	<lightning-button variant="brand" label="Save" class="slds-m-left_x-small"></lightning-button>
+        </div>
+  </lightning-quick-action-panel>
+</template>

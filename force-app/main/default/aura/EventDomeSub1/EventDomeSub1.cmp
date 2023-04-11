@@ -1,0 +1,24 @@
+<!--
+ - Created by Spring on 28/11/2017.
+ -->
+
+<aura:component description="EventDomeSub1">
+
+  <ltng:require scripts="{!$Resource.jquery}" beforeLoadingResources="{!c.loadJqueryBefore}" afterScriptsLoaded="{!c.loadJqueryAfter}"/>
+
+  <aura:attribute name="pText" type="String" default="" access="public"/>
+  <aura:attribute name="evtAppMsg" type="String" default="" access="public"/>
+
+  <aura:registerEvent name="eventDome" type="c:EventDomeCmpEvt" />
+
+  <aura:handler event="c:EventDomeCmpAppEvt" action="{!c.handlerEventDomeAppEvt}"/>
+
+  <div>
+    我是EventDomeSub1,父组件设置的值为:<span style="background-color:red">{!v.pText}</span><br/>
+    接受App类型事件:<span style="background-color:red">{!v.evtAppMsg}</span>
+  </div>
+
+  <lightning:button name="向父组件发送事件" label="向父组件发送事件" onclick="{!c.sendEvent}" />
+
+
+</aura:component>

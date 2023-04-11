@@ -1,0 +1,4 @@
+<!-- 换页时触发 -->
+<aura:event type="COMPONENT" description="When page changed." >
+    <aura:attribute name="pageNumber" type="String"/>
+</aura:event>

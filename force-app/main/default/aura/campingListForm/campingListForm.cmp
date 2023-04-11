@@ -1,0 +1,50 @@
+<aura:component controller="CampingListController">
+    <aura:registerEvent name="addItemEvent" type="c:addItemEvent"/>
+    
+	<aura:attribute name="newItem" type="Camping_Item__c" 
+                    default="{ 'sobjectType': 'Camping_Item__c',
+                             'Name': '',
+                             'Price__c': 0,
+                             'Quantity__c': 0,
+                             'Packed__c': true }"/>
+    
+    <lightning:card title="Camping Form">
+        <form class="slds-form--stacked">
+            <p>
+                <lightning:input value="{!v.newItem.Name}"
+                     		label="Name"
+                            aura:id="itemform"
+                     		required="true"/>
+            </p>
+            <p>
+                <lightning:input type="number"
+                             label="Price"
+                             aura:id="itemform"
+                             value="{!v.newItem.Price__c}" 
+                             formatter="currency"
+                             required="true"/>
+            </p>
+            <p>
+                <lightning:input type="number" 
+                             aura:id="itemform" 
+                             label="Quantity"
+                             name="Quantity"
+                             min="1"
+                             value="{!v.newItem.Quantity__c}"
+                             messageWhenRangeUnderflow="Enter an Quantity that's at least 1"/>
+            </p>
+            <P>
+                <lightning:input type="checkbox"
+                             label="Packed?"
+                             aura:id="itemform"
+                             name="Packed"
+                             checked="{!v.newItem.Packed__c}" />
+            </P>
+            
+            <lightning:button label="Create Camping" 
+                              class="slds-m-top--medium"
+                              variant="brand"
+                              onclick="{!c.clickCreateItem   }"/>
+        </form>
+    </lightning:card>
+</aura:component>

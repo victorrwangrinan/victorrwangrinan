@@ -1,0 +1,27 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="account" type="Account"/>
+    <aura:attribute name="str" type="String" default="123"/>
+
+    <aura:attribute name="parFlag" type="boolean" default="true"/>
+
+    <!-- <aura:handler event="c:AccountCmpEvt" name="acountChangeEvt" action="{!c.handleOnChange}" />
+
+    <c:helloword/>
+    <lightning:card title="Find an Account" class="slds-m-top_10px" iconName="standard:custom">
+        <c:MyAccountComponent/>
+    </lightning:card>
+    <lightning:card title="Find an Account" class="slds-m-top_10px" iconName="standard:custom">
+        <c:ShowAccount aura:id="childCmp"/>
+    </lightning:card> -->
+    <ltng:require scripts="{!$Resource.FileSave}" afterScriptsLoaded="{!c.afterScriptsLoaded}"  />
+    <aura:attribute name="tabledata" type="Object"/>
+	<aura:attribute name="columns" type="List"/>
+	<aura:handler name="init" value="{! this }" action="{! c.init }"/>
+	<!-- <c:customDatatable tabledata="{!v.tabledata}" columns="{!v.columns}"></c:customDatatable> -->
+    <lightning:button label="download" onclick="{!c.download}"></lightning:button>
+
+    <c:helloword flag="true"></c:helloword>
+    <aura:if isTrue="{!v.parFlag}">
+        par true
+    </aura:if>
+</aura:component>

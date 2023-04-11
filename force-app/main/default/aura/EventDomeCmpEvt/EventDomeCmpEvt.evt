@@ -1,0 +1,7 @@
+<!--
+ - Created by Spring on 28/11/2017.
+ -->
+
+<aura:event type="COMPONENT" description="EventDomeCmpEvt">
+  <aura:attribute name="eventMsg" type="String" default=""/>
+</aura:event>

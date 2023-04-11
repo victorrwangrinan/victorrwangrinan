@@ -1,0 +1,11 @@
+.THIS {
+    height: 48px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgb(250, 250, 249);
+}
+.THIS .slds-button{
+    height: 34px;
+    width: 38px;
+    padding: 0px;
+}

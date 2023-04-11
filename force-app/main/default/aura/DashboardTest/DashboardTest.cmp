@@ -1,0 +1,3 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+	<wave:waveDashboard dashboardId="01Z7F000000WUFNUA4" />
+</aura:component>

@@ -1,0 +1,6 @@
+<apex:page standardController="Contact">
+    {!$User.FirstName}
+    <input type="text" value="{!Contact.FirstName}" />
+    <input type="text" value="{!Contact.LastName}" />
+    <input type="text" value="{!Contact.Owner.Email}" />
+</apex:page>

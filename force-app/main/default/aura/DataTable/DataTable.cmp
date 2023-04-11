@@ -1,0 +1,138 @@
+<!--
+ - edit by rwu128 on 2018.12.21
+ -
+ - 公用的复杂版DataTable组件，单元格里可以放 一个/多个 功能性/交互型组件
+ -
+ -
+ - @param {[object]} columns - 列的定义数据
+ -      @param {string} invisible             - 列不可见吗？默认为false
+ -      @param {string} label                 - 显示字段
+ -      @param {number} size                  - 12栅格所占份数，可以设置列的宽度
+ -      @param {string} width                 - 列的宽度,可以是任何css有效值
+ -      @param {string} class                 - 为整列的th和td附加class
+ -      @param {string} tdStyle               - 为整列的td附加的style样式，格式和dom元素的style样式一致
+ -      @param {number|string} rowSpan        - 单元格所占的行数
+ -                                            - number: 默认1,按该数值重复合并
+ -                                            - string: 从上到下依次按fieldName的数据行合并（还没有做）
+ -      @param {boolean} showTitle            - 是否显示title
+ -      @param {boolean} sortable             - 是否排序，默认为true
+ -      @param {string} sortBy                - 基于哪个字段排序,默认使用指定的fieldName字段
+ -
+ -      @param {string} fieldName   - 字段名。支持深度遍历对象：值可以类似为'keyA.keyB'
+ -
+ -      @param {string} type        - 1. 单元格内组件类型，目前可选值为index,text(默认)
+ -                                    2. 其他复杂组件类型，lightning标准组件如 lightning:input , lightning:button 等， -                                       自定义组件如 c:CPRI_ButtonMenu 等
+ -                                    3. 现在不支持原生的dom标签，是否支持？
+ -
+ -      @param {object} attributes  - 创建组件需要的属性
+ -                                    1. 如果组件的值是从data里通过字段名获取的
+ -                                       可以写成attrName:'${keyA}',attrName:'${keyA.keyB}'这种形式
+ -                                        如果是${this}表示该条数据本身
+ -                                    2. 如果属性的值基于该条数据生成的，可以传递一个方法,写法如下：
+ -                                       其中item为该条数据
+ -                                       attributeName:function(item)
+ -                                             {
+ -                                                  return item.visible?'slds-hidden':'';
+ -                                             }
+ -                                    3. 对应的回调函数函数可以写成 onclick:compnent.get('c.handleClick');
+ -
+ -                                       handleClick:function (comp,event,helper)
+ -                                       {
+ -                                           //1. 所有组件都有value属性，如果value属性本身闲置，你可以考虑借用value属性,将需要的值带入带出
+ -                                           var value=event.getSource().get('v.value');
+ -
+ -                                           //2. 事件本身数据，依旧可以通过event.getParam和event.getParams获得
+ -
+ -                                           //3. 可以带回数据行的索引
+ -                                           //   现在也只带回了索引,而且是通过aura:id带回来的，最优解？
+ -                                           var index=event.getSource().getLocalId();
+ -
+ -                                       }
+ -
+ -      @param {array} children     - [{type，attributes}]
+ -                                    使用children指定，单元格里的多个组件
+ -
+ - @param {[object]} data
+ - @param {string} mode             - 表格的模式，可选值'auto'(默认,自动添加滚动条),'fixed'(可选，固定100%宽度)
+ - @param {string} trStyle          - 行的样式
+ - @param {boolean} showBorder      - 是否显示border
+ - @param {boolean=true} showSettingBtn  -是否显示设置按钮
+ -->
+
+<aura:component access="global">
+    <aura:attribute name="columns" type="List" default="[]"/>
+    <aura:attribute name="data" type="List" default="[]"/>
+    <aura:attribute name="mode" type="String" default="auto"/>
+    <aura:attribute name="trStyle" type="string" default=""/>
+    <aura:attribute name="showBorder" type="Boolean" default="false"/>
+    <aura:attribute name="showSettingBtn" type="Boolean" default="true"/>
+
+
+
+    <!--lightning:checkboxGroup使用的columns-->
+    <aura:attribute name="checkboxGroupColumns" type="List" default="[]"/>
+    <!---选中显示的列-->
+    <aura:attribute name="selectColumns" type="List" default="[]"/>
+    <aura:attribute name="isShow" type="Boolean" default="false"/>
+    <!--内部属性标识是否全选-->
+    <aura:attribute name="selectAll" type="Boolean" default="false" access="private"/>
+    <!--内部方法,方便createTableDebounce调用，请不要在外部调用，没有定义在helper里-->
+    <aura:method name="createTable"/>
+
+    <aura:handler name="change" value="{!v.data}" action="{!c.createTableDebounce}"/>
+    <aura:handler name="change" value="{!v.columns}" action="{!c.createTableDebounce}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.createTableDebounce}"/>
+    <!--全选后的回调-->
+    <aura:registerEvent name="onSelectAll" type="c:CommonEvent"/>
+
+
+
+    <div class="{!if(v.mode!='auto','table_fixed','')}">
+        <aura:if isTrue="{!v.showSettingBtn}">
+            <div class="slds-text-align_right">
+                <lightning:buttonIcon iconName="utility:settings" alternativeText="Select Fields to Display" onclick="{!c.selectColumnsToDisplay}"/>
+            </div>
+        </aura:if>
+        <table class="{!v.showBorder?'table_border':''}">
+            <!--表头-->
+            <tr class="table__header" style="{!if(v.trStyle!='',v.trStyle,'')}">
+                <aura:iteration items="{!v.columns}" var="column" indexVar="index">
+                    <aura:if isTrue="{!column.invisible!=true}">
+                        <!--label不存在且为checkbox类型-->
+                        <aura:if isTrue="{! and(column.label==undefined,column.type=='lightning:input',column.attributes!=undefined,column.attributes.type=='checkbox')}">
+                            <th class="{! join(' ',if(column.class,column.class,''),'slds-p-around--x-small',if(column.size,'slds-size_'+column.size+'-of-12',''))}" style="{!if(column.width,'width:'+column.width,'')}">
+                                <lightning:input aura:id="input-checkbox" type="checkbox" onchange="{!c.checkAll}" checked="{!v.selectAll}"/>
+                            </th>
+                            <aura:set attribute="else">
+                                <th title="{! column.label}" class="{! join(' ',if(column.class,column.class,''),'slds-p-around--x-small',if(column.size,'slds-size_'+column.size+'-of-12',''),if(and(column.sortable!=false,or(column.fieldName,column.sortBy)),'th_sortable',''))}" style="{!if(column.width,'width:'+column.width,'')}" onclick="{!if(and(column.sortable!=false,or(column.fieldName,column.sortBy)),c.sortTableByColumn,'')}" data-column-sort-method="" data-column-index="{!index}">
+                                    {! column.label}
+                                    <aura:if isTrue="{!and(column.sortable!=false,or(column.fieldName,column.sortBy))}">
+                                        <div class="sort-indicator">
+                                            <lightning:icon class="sort-indicator__des" iconName="utility:down" variant="brand" size="x-small"/>
+                                            <lightning:icon class="sort-indicator__asc" iconName="utility:up" variant="brand" size="x-small"/>
+                                        </div>
+                                    </aura:if>
+                                </th>
+                            </aura:set>
+                        </aura:if>
+                    </aura:if>
+                </aura:iteration>
+            </tr>
+            <!--数据（动态创建）-->
+            <tbody class="slds-p-bottom--small">
+                {! v.body}
+            </tbody>
+        </table>
+        <aura:if isTrue="{!or(v.data==null,v.data.length==0)}">
+            <p class="slds-text-align_center slds-p-around--medium">没有数据显示</p>
+        </aura:if>
+        <!--弹出框-->
+        <c:Modal title="TITLE" isShow="{!v.isShow}">
+            <lightning:checkboxGroup options="{!v.checkboxGroupColumns}" value="{!v.selectColumns}"/>
+            <aura:set attribute="footer">
+                <lightning:button disabled="{!if(v.checkboxGroupColumns.length==v.selectColumns.length,true,false)}" onclick="{!c.selectAllColumns}">Select All</lightning:button>
+                <lightning:button disabled="{!if(v.selectColumns.length==0,true,false)}" variant="brand" onclick="{!c.applyColumnsToDisplay}">OK</lightning:button>
+            </aura:set>
+        </c:Modal>
+    </div>
+</aura:component>
